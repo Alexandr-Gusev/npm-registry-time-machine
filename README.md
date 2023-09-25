@@ -4,26 +4,31 @@ Proxy for limiting the release dates of packages.
 
 ## Installation
 
+#### pip
 ```bash
-# pip
 pip install npm-registry-time-machine
+```
 
-# npm
+#### npm
+```bash
 npm install -g npm-registry-time-machine
 ```
 
 ## Usage
 
-Run proxy:
-```bash
-# python
-npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
+### Run proxy:
 
-# npx
+#### python
+```bash
+npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
+```
+
+#### npx
+```bash
 npx npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
 ```
 
-Set proxy as registry:
+### Set proxy as registry:
 ```bash
 npm config set registry http://127.0.0.1:3000
 ```
