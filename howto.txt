@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+JS
+-------------------------------------------------------------------------------
+cd js
+
+npm publish
+
+-------------------------------------------------------------------------------
+Python
+-------------------------------------------------------------------------------
+python -m pip install --upgrade build
+python -m pip install --upgrade twine
+
+cd python
+
+python -m build
+
+python -m twine upload -r testpypi dist/* -u__token__ -p***
+python -m pip install -i https://test.pypi.org/simple/ npm-registry-time-machine
+
+python -m twine upload dist/* -u__token__ -p***
+python -m pip install npm-registry-time-machine
