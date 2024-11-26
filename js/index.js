@@ -9,6 +9,7 @@ commander
 	.option("--registry <value>", "Registry.", "https://registry.npmjs.org")
 	.option("--timeout <value>", "Timeout.", 120)
 	.option("--max-date <value>", "Max date.", "2022-02-02")
+	.option("--trusted-packages <value...>", "Trusted packages.", [])
 	.parse();
 const opts = commander.opts();
 
@@ -33,7 +34,7 @@ const proxy = async (req, res) => {
 
 	if (contentType.startsWith("application/json")) {
 		const data = JSON.parse(response.data);
-		const {versions, time} = data;
+		const {name, versions, time} = data;
 		const newTime = {
 			created: time.created,
 			modified: time.modified
@@ -41,7 +42,7 @@ const proxy = async (req, res) => {
 		for (const version of Object.keys(time)) {
 			const ts = time[version];
 			const date = ts.substring(0, 10);
-			if (date <= opts.maxDate) {
+			if (date <= opts.maxDate || opts.trustedPackages.includes(name)) {
 				newTime[version] = ts;
 			} else {
 				delete versions[version];
