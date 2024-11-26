@@ -13,6 +13,8 @@ commander
 	.parse();
 const opts = commander.opts();
 
+const fixTarball = (url, registry) => registry + url.substring(new URL(url).origin.length).replace(/%2f/ig, "/");
+
 const proxy = async (req, res) => {
 	const url = decodeURIComponent(req.url);
 	console.log(url);
@@ -44,6 +46,9 @@ const proxy = async (req, res) => {
 			const date = ts.substring(0, 10);
 			if (date <= opts.maxDate || opts.trustedPackages.includes(name)) {
 				newTime[version] = ts;
+				if (versions[version] && versions[version].dist && versions[version].dist.tarball) {
+					versions[version].dist.tarball = fixTarball(versions[version].dist.tarball, opts.registry);
+				}
 			} else {
 				delete versions[version];
 			}

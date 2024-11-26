@@ -20,12 +20,12 @@ npm install -g npm-registry-time-machine
 
 #### python
 ```bash
-npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
+npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02 --trusted-packages jsx-add-data-test-id
 ```
 
 #### npx
 ```bash
-npx npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
+npx npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02 --trusted-packages jsx-add-data-test-id
 ```
 
 ### Set proxy as registry:

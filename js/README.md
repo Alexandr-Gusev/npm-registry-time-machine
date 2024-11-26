@@ -12,7 +12,7 @@ npm install -g npm-registry-time-machine
 
 Run proxy:
 ```bash
-npx npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02
+npx npm-registry-time-machine --port 3000 --registry https://registry.npmjs.org --timeout 120 --max-date 2022-02-02 --trusted-packages jsx-add-data-test-id
 ```
 
 Set proxy as registry:

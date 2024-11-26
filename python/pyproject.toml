@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "npm-registry-time-machine"
-version = "1.0.9"
+version = "1.0.10"
 authors = [
   { name="Alexandr Gusev", email="alphacity@yandex.ru" },
 ]
