@@ -27,15 +27,21 @@ async def proxy(request):
             "created": time["created"],
             "modified": time["modified"]
         }
+        latest_ts = None
+        latest_version = None
         for version, ts in time.items():
             date = ts[:10]
             if date <= args.max_date or name in args.trusted_packages:
                 new_time[version] = ts
                 if versions.get(version) and versions[version].get("dist") and versions[version]["dist"].get("tarball"):
                     versions[version]["dist"]["tarball"] = fix_tarball(versions[version]["dist"]["tarball"], args.registry)
+                if (latest_ts is None or ts > latest_ts) and version.find("-") == -1 and version in versions:
+                    latest_ts = ts
+                    latest_version = version
             else:
                 versions.pop(version, None)
         data["time"] = new_time
+        data["dist-tags"]["latest"] = latest_version
 
         return web.json_response(data)
 
@@ -49,7 +55,7 @@ def main():
     parser.add_argument("--registry", default="https://registry.npmjs.org", type=str)
     parser.add_argument("--timeout", default=120, type=int)
     parser.add_argument("--max-date", default="2022-02-02", type=str)
-    parser.add_argument("--trusted-packages", nargs="*", type=str)
+    parser.add_argument("--trusted-packages", default=[], nargs="*", type=str)
     args = parser.parse_args()
 
     app = web.Application()

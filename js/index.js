@@ -41,6 +41,8 @@ const proxy = async (req, res) => {
 			created: time.created,
 			modified: time.modified
 		};
+		let latestTs;
+		let latestVersion;
 		for (const version of Object.keys(time)) {
 			const ts = time[version];
 			const date = ts.substring(0, 10);
@@ -49,11 +51,16 @@ const proxy = async (req, res) => {
 				if (versions[version] && versions[version].dist && versions[version].dist.tarball) {
 					versions[version].dist.tarball = fixTarball(versions[version].dist.tarball, opts.registry);
 				}
+				if ((!latestTs || ts > latestTs) && version.indexOf("-") == -1 && versions[version]) {
+					latestTs = ts;
+					latestVersion = version;
+				}
 			} else {
 				delete versions[version];
 			}
 		}
 		data.time = newTime;
+		data["dist-tags"].latest = latestVersion
 
 		return res.json(data);
 	}
